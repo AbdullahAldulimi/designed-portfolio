@@ -1,0 +1,1751 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 * \{\
+  margin: 0;\
+  padding: 0;\
+  box-sizing: border-box;\
+\}\
+\
+html,\
+body \{\
+  width: 100%;\
+  height: 100%;\
+\}\
+\
+body \{\
+  font-family: "Inter", sans-serif;\
+\
+  background: #c7c7c7;\
+\
+  color: #f4f4f4;\
+\
+  overflow: hidden;\
+\}\
+\
+button,\
+input,\
+textarea \{\
+  font-family: inherit;\
+\}\
+\
+button \{\
+  border: 0;\
+\}\
+\
+button,\
+a \{\
+  -webkit-tap-highlight-color: transparent;\
+\}\
+\
+\
+/* ==================================================\
+   CUSTOM CURSOR\
+================================================== */\
+\
+.cursor-dot,\
+.cursor-ring \{\
+  position: fixed;\
+\
+  left: 0;\
+  top: 0;\
+\
+  pointer-events: none;\
+\
+  z-index: 20000;\
+\
+  border-radius: 50%;\
+\
+  opacity: 0;\
+\}\
+\
+.cursor-dot \{\
+  width: 5px;\
+  height: 5px;\
+\
+  background: white;\
+\}\
+\
+.cursor-ring \{\
+  width: 34px;\
+  height: 34px;\
+\
+  border:\
+    1px solid\
+    rgba(255,255,255,.45);\
+\
+  transition:\
+    width .25s ease,\
+    height .25s ease,\
+    border-color .25s ease,\
+    background .25s ease;\
+\}\
+\
+body.cursor-active .cursor-dot,\
+body.cursor-active .cursor-ring \{\
+  opacity: 1;\
+\}\
+\
+body.cursor-hover .cursor-ring \{\
+  width: 55px;\
+  height: 55px;\
+\
+  background:\
+    rgba(255,255,255,.07);\
+\
+  border-color:\
+    rgba(255,255,255,.7);\
+\}\
+\
+\
+/* ==================================================\
+   INTRO\
+================================================== */\
+\
+.intro \{\
+  position: fixed;\
+\
+  inset: 0;\
+\
+  z-index: 15000;\
+\
+  display: flex;\
+\
+  align-items: center;\
+  justify-content: center;\
+\
+  background: #111;\
+\}\
+\
+.intro-inner \{\
+  text-align: center;\
+\
+  display: flex;\
+  flex-direction: column;\
+\
+  align-items: center;\
+\
+  gap: 18px;\
+\}\
+\
+.intro-inner span \{\
+  font-size: 9px;\
+\
+  letter-spacing: 4px;\
+\
+  color: #666;\
+\
+  opacity: 0;\
+\
+  animation:\
+    introFade\
+    .7s ease\
+    forwards .15s;\
+\}\
+\
+.intro-line \{\
+  width: 0;\
+  height: 1px;\
+\
+  background: #777;\
+\
+  animation:\
+    introLine\
+    1s\
+    cubic-bezier(.16,1,.3,1)\
+    forwards .3s;\
+\}\
+\
+.intro-inner strong \{\
+  font-size:\
+    clamp(\
+      42px,\
+      7vw,\
+      110px\
+    );\
+\
+  letter-spacing: -5px;\
+\
+  font-weight: 900;\
+\
+  opacity: 0;\
+\
+  transform:\
+    translateY(30px);\
+\
+  animation:\
+    introTitle\
+    1s\
+    cubic-bezier(.16,1,.3,1)\
+    forwards .55s;\
+\}\
+\
+.intro.hide \{\
+  transform:\
+    translateY(-100%);\
+\
+  transition:\
+    transform\
+    .9s\
+    cubic-bezier(.76,0,.24,1);\
+\}\
+\
+@keyframes introFade \{\
+  to \{\
+    opacity: 1;\
+  \}\
+\}\
+\
+@keyframes introLine \{\
+  to \{\
+    width: 120px;\
+  \}\
+\}\
+\
+@keyframes introTitle \{\
+\
+  to \{\
+    opacity: 1;\
+\
+    transform:\
+      translateY(0);\
+  \}\
+\
+\}\
+\
+\
+/* ==================================================\
+   TRANSITION\
+================================================== */\
+\
+.transition-layer \{\
+  position: fixed;\
+\
+  inset: 0;\
+\
+  z-index: 12000;\
+\
+  pointer-events: none;\
+\
+  background: #efefef;\
+\
+  transform:\
+    translateY(100%);\
+\
+  display: flex;\
+\
+  align-items: center;\
+  justify-content: center;\
+\}\
+\
+.transition-layer.enter \{\
+  animation:\
+    pageSwipeIn\
+    .65s\
+    cubic-bezier(.76,0,.24,1)\
+    forwards;\
+\}\
+\
+.transition-layer.exit \{\
+  animation:\
+    pageSwipeOut\
+    .65s\
+    cubic-bezier(.76,0,.24,1)\
+    forwards;\
+\}\
+\
+.transition-number \{\
+  color: #111;\
+\
+  font-size: 12px;\
+\
+  letter-spacing: 3px;\
+\}\
+\
+@keyframes pageSwipeIn \{\
+\
+  to \{\
+    transform:\
+      translateY(0);\
+  \}\
+\
+\}\
+\
+@keyframes pageSwipeOut \{\
+\
+  from \{\
+    transform:\
+      translateY(0);\
+  \}\
+\
+  to \{\
+    transform:\
+      translateY(-100%);\
+  \}\
+\
+\}\
+\
+\
+/* ==================================================\
+   SCENE\
+================================================== */\
+\
+.scene \{\
+  width: 100vw;\
+  height: 100svh;\
+\
+  display: flex;\
+\
+  align-items: center;\
+  justify-content: center;\
+\
+  background:\
+    radial-gradient(\
+      circle at center,\
+      #dedede 0%,\
+      #c8c8c8 55%,\
+      #b8b8b8 100%\
+    );\
+\}\
+\
+\
+/* ==================================================\
+   SITE\
+================================================== */\
+\
+.site \{\
+  position: relative;\
+\
+  width:\
+    min(\
+      76vw,\
+      1280px\
+    );\
+\
+  aspect-ratio:\
+    1.6 / 1;\
+\
+  max-height:\
+    80vh;\
+\
+  overflow: hidden;\
+\
+  isolation: isolate;\
+\
+  background:\
+    radial-gradient(\
+      circle at 48% 45%,\
+      #252525 0%,\
+      #1d1d1d 43%,\
+      #171717 100%\
+    );\
+\
+  box-shadow:\
+    0 45px 100px\
+    rgba(0,0,0,.35),\
+\
+    0 12px 25px\
+    rgba(0,0,0,.15);\
+\}\
+\
+\
+/* ==================================================\
+   NOISE\
+================================================== */\
+\
+.noise \{\
+  position: absolute;\
+\
+  inset: -70%;\
+\
+  width: 240%;\
+  height: 240%;\
+\
+  z-index: 100;\
+\
+  opacity: .03;\
+\
+  pointer-events: none;\
+\
+  background-image:\
+    repeating-radial-gradient(\
+      circle at 50% 50%,\
+      rgba(255,255,255,.8) 0 .35px,\
+      transparent .5px 3px\
+    );\
+\
+  background-size:\
+    6px 6px;\
+\
+  animation:\
+    noiseMove\
+    .35s\
+    steps(2)\
+    infinite;\
+\}\
+\
+@keyframes noiseMove \{\
+\
+  0% \{\
+    transform:\
+      translate(0,0);\
+  \}\
+\
+  25% \{\
+    transform:\
+      translate(-1%,1%);\
+  \}\
+\
+  50% \{\
+    transform:\
+      translate(1%,-1%);\
+  \}\
+\
+  75% \{\
+    transform:\
+      translate(1%,1%);\
+  \}\
+\
+  100% \{\
+    transform:\
+      translate(0,0);\
+  \}\
+\
+\}\
+\
+\
+/* ==================================================\
+   CURSOR GLOW\
+================================================== */\
+\
+.cursor-glow \{\
+  position: absolute;\
+\
+  width: 500px;\
+  height: 500px;\
+\
+  border-radius: 50%;\
+\
+  pointer-events: none;\
+\
+  z-index: 0;\
+\
+  opacity: .35;\
+\
+  transform:\
+    translate(-50%, -50%);\
+\
+  background:\
+    radial-gradient(\
+      circle,\
+      rgba(255,255,255,.07),\
+      transparent 65%\
+    );\
+\
+  filter: blur(15px);\
+\}\
+\
+\
+/* ==================================================\
+   BACKGROUND CIRCLES\
+================================================== */\
+\
+.bg-circle \{\
+  position: absolute;\
+\
+  border:\
+    1px solid\
+    rgba(255,255,255,.025);\
+\
+  border-radius: 50%;\
+\
+  pointer-events: none;\
+\}\
+\
+.bg-circle-one \{\
+  width: 520px;\
+  height: 520px;\
+\
+  right: -220px;\
+  top: -240px;\
+\
+  animation:\
+    slowRotate\
+    25s\
+    linear\
+    infinite;\
+\}\
+\
+.bg-circle-two \{\
+  width: 380px;\
+  height: 380px;\
+\
+  left: -160px;\
+  bottom: -220px;\
+\
+  animation:\
+    slowRotate\
+    30s\
+    linear\
+    reverse\
+    infinite;\
+\}\
+\
+@keyframes slowRotate \{\
+\
+  to \{\
+    transform:\
+      rotate(360deg);\
+  \}\
+\
+\}\
+\
+\
+/* ==================================================\
+   HEADER\
+================================================== */\
+\
+.header \{\
+  position: absolute;\
+\
+  top: 5.5%;\
+  left: 8%;\
+  right: 8%;\
+\
+  z-index: 200;\
+\
+  display: grid;\
+\
+  grid-template-columns:\
+    auto\
+    1fr\
+    auto;\
+\
+  align-items: center;\
+\
+  gap: 40px;\
+\}\
+\
+.logo \{\
+  width: 34px;\
+  height: 34px;\
+\
+  border-radius: 50%;\
+\
+  background: white;\
+\
+  color: #161616;\
+\
+  font-size: 20px;\
+\
+  font-weight: 900;\
+\
+  cursor: pointer;\
+\
+  display: flex;\
+\
+  justify-content: center;\
+  align-items: center;\
+\}\
+\
+.nav \{\
+  display: flex;\
+\
+  justify-content: center;\
+\
+  gap:\
+    clamp(\
+      25px,\
+      4vw,\
+      65px\
+    );\
+\}\
+\
+.nav button \{\
+  position: relative;\
+\
+  background: transparent;\
+\
+  color: #777;\
+\
+  font-size: 8px;\
+\
+  letter-spacing: .8px;\
+\
+  cursor: pointer;\
+\
+  padding:\
+    8px 0;\
+\
+  transition:\
+    color .3s ease;\
+\}\
+\
+.nav button::after \{\
+  content: "";\
+\
+  position: absolute;\
+\
+  left: 50%;\
+  bottom: 0;\
+\
+  width: 0;\
+  height: 1px;\
+\
+  background: white;\
+\
+  transform:\
+    translateX(-50%);\
+\
+  transition:\
+    width .35s\
+    cubic-bezier(.16,1,.3,1);\
+\}\
+\
+.nav button:hover,\
+.nav button.active-nav \{\
+  color: white;\
+\}\
+\
+.nav button:hover::after,\
+.nav button.active-nav::after \{\
+  width: 100%;\
+\}\
+\
+.header-actions \{\
+  display: flex;\
+\
+  align-items: center;\
+\
+  gap: 10px;\
+\}\
+\
+.language \{\
+  background: transparent;\
+\
+  color: #777;\
+\
+  font-size: 8px;\
+\
+  cursor: pointer;\
+\}\
+\
+.talk-button \{\
+  display: flex;\
+\
+  align-items: center;\
+\
+  gap: 12px;\
+\
+  padding:\
+    8px 13px;\
+\
+  border:\
+    1px solid\
+    #444;\
+\
+  background:\
+    transparent;\
+\
+  color: #aaa;\
+\
+  font-size: 7px;\
+\
+  letter-spacing: .8px;\
+\
+  cursor: pointer;\
+\
+  transition:\
+    background .3s ease,\
+    color .3s ease;\
+\}\
+\
+.talk-button:hover \{\
+  background: white;\
+\
+  color: #111;\
+\}\
+\
+\
+/* ==================================================\
+   PAGES\
+================================================== */\
+\
+.page \{\
+  position: absolute;\
+\
+  inset: 0;\
+\
+  opacity: 0;\
+\
+  visibility: hidden;\
+\
+  pointer-events: none;\
+\
+  transform:\
+    scale(.985);\
+\
+  transition:\
+    opacity .55s ease,\
+    transform .65s ease,\
+    visibility .55s;\
+\}\
+\
+.page.active \{\
+  opacity: 1;\
+\
+  visibility: visible;\
+\
+  pointer-events: auto;\
+\
+  transform:\
+    scale(1);\
+\}\
+\
+\
+/* ==================================================\
+   HOME\
+================================================== */\
+\
+.home \{\
+  position: absolute;\
+\
+  inset: 0;\
+\}\
+\
+.home-center \{\
+  position: absolute;\
+\
+  left: 50%;\
+  top: 52%;\
+\
+  transform:\
+    translate(-50%, -50%);\
+\
+  text-align: center;\
+\}\
+\
+.home-eyebrow \{\
+  margin-bottom: 10px;\
+\
+  color: #8a8a8a;\
+\
+  font-size: 9px;\
+\
+  letter-spacing: 1.8px;\
+\}\
+\
+.hero-title \{\
+  font-size:\
+    clamp(\
+      70px,\
+      7vw,\
+      120px\
+    );\
+\
+  font-weight: 900;\
+\
+  line-height: .82;\
+\
+  letter-spacing: -6px;\
+\
+  white-space: nowrap;\
+\
+  overflow: hidden;\
+\}\
+\
+.hero-title .char \{\
+  display: inline-block;\
+\
+  opacity: 0;\
+\
+  transform:\
+    translateY(110%);\
+\
+  animation:\
+    characterReveal\
+    .9s\
+    cubic-bezier(.16,1,.3,1)\
+    forwards;\
+\
+  animation-delay:\
+    calc(\
+      .03s * var(--char-index)\
+      + .4s\
+    );\
+\}\
+\
+@keyframes characterReveal \{\
+\
+  to \{\
+    opacity: 1;\
+\
+    transform:\
+      translateY(0);\
+  \}\
+\
+\}\
+\
+.hero-meta \{\
+  margin-top: 18px;\
+\
+  transform:\
+    translateX(45%);\
+\
+  display: flex;\
+\
+  flex-direction: column;\
+\
+  align-items: flex-start;\
+\
+  color: #c2c2c2;\
+\
+  font-size: 8px;\
+\
+  line-height: 1.25;\
+\}\
+\
+.reveal-up \{\
+  opacity: 0;\
+\
+  transform:\
+    translateY(20px);\
+\
+  animation:\
+    revealUp\
+    .9s\
+    cubic-bezier(.16,1,.3,1)\
+    forwards .75s;\
+\}\
+\
+@keyframes revealUp \{\
+\
+  to \{\
+    opacity: 1;\
+\
+    transform:\
+      translateY(0);\
+  \}\
+\
+\}\
+\
+.home-index \{\
+  position: absolute;\
+\
+  top: 21%;\
+  left: 50%;\
+\
+  transform:\
+    translateX(-50%);\
+\
+  color: #444;\
+\
+  font-size: 7px;\
+\
+  letter-spacing: 2px;\
+\}\
+\
+.home-detail \{\
+  position: absolute;\
+\
+  bottom: 12%;\
+\
+  display: flex;\
+\
+  flex-direction: column;\
+\
+  gap: 5px;\
+\}\
+\
+.home-detail-left \{\
+  left: 22%;\
+\}\
+\
+.home-detail-right \{\
+  right: 22%;\
+\
+  text-align: right;\
+\}\
+\
+.home-detail span \{\
+  color: #525252;\
+\
+  font-size: 6px;\
+\
+  letter-spacing: 1.4px;\
+\}\
+\
+.home-detail strong \{\
+  color: #888;\
+\
+  font-size: 7px;\
+\
+  font-weight: 500;\
+\}\
+\
+\
+/* ==================================================\
+   WORK\
+================================================== */\
+\
+.work-page \{\
+  height: 100%;\
+\
+  padding:\
+    15% 10%\
+    9%;\
+\
+  display: grid;\
+\
+  grid-template-columns:\
+    .7fr\
+    1.7fr;\
+\
+  gap: 7%;\
+\}\
+\
+.section-kicker \{\
+  color: #666;\
+\
+  font-size: 7px;\
+\
+  letter-spacing: 1.5px;\
+\}\
+\
+.section-intro h2 \{\
+  margin-top: 12px;\
+\
+  font-size:\
+    clamp(\
+      38px,\
+      4vw,\
+      65px\
+    );\
+\
+  letter-spacing: -3px;\
+\}\
+\
+.section-intro p \{\
+  margin-top: 18px;\
+\
+  max-width: 250px;\
+\
+  color: #777;\
+\
+  font-size: 8px;\
+\
+  line-height: 1.7;\
+\}\
+\
+.project-grid \{\
+  display: grid;\
+\
+  grid-template-columns:\
+    repeat(3, 1fr);\
+\
+  gap: 12px;\
+\
+  align-items: center;\
+\}\
+\
+.project-card \{\
+  perspective: 900px;\
+\
+  cursor: pointer;\
+\}\
+\
+.project-visual \{\
+  position: relative;\
+\
+  width: 100%;\
+\
+  aspect-ratio:\
+    .82 / 1;\
+\
+  overflow: hidden;\
+\
+  border:\
+    1px solid\
+    rgba(255,255,255,.04);\
+\
+  transform-style:\
+    preserve-3d;\
+\
+  transition:\
+    transform .2s ease-out,\
+    border-color .3s ease;\
+\}\
+\
+.project-card:hover .project-visual \{\
+  border-color:\
+    rgba(255,255,255,.16);\
+\}\
+\
+.visual-one \{\
+  background:\
+    linear-gradient(\
+      145deg,\
+      #313131,\
+      #111 70%\
+    );\
+\}\
+\
+.visual-two \{\
+  background:\
+    radial-gradient(\
+      circle at 50% 45%,\
+      #444,\
+      #121212 60%\
+    );\
+\}\
+\
+.visual-three \{\
+  background:\
+    linear-gradient(\
+      45deg,\
+      #111 15%,\
+      #3b3b3b 48%,\
+      #151515 80%\
+    );\
+\}\
+\
+.visual-grid \{\
+  position: absolute;\
+\
+  inset: 0;\
+\
+  opacity: .22;\
+\
+  background-image:\
+    linear-gradient(\
+      rgba(255,255,255,.08)\
+      1px,\
+      transparent 1px\
+    ),\
+\
+    linear-gradient(\
+      90deg,\
+      rgba(255,255,255,.08)\
+      1px,\
+      transparent 1px\
+    );\
+\
+  background-size:\
+    24px 24px;\
+\}\
+\
+.project-orb \{\
+  position: absolute;\
+\
+  width: 70%;\
+\
+  aspect-ratio: 1;\
+\
+  border-radius: 50%;\
+\
+  left: 50%;\
+  top: 50%;\
+\
+  transform:\
+    translate(-50%, -50%);\
+\
+  border:\
+    1px solid\
+    rgba(255,255,255,.2);\
+\
+  box-shadow:\
+    0 0 60px\
+    rgba(255,255,255,.05);\
+\
+  animation:\
+    orbPulse\
+    4s\
+    ease-in-out\
+    infinite;\
+\}\
+\
+@keyframes orbPulse \{\
+\
+  50% \{\
+    transform:\
+      translate(-50%, -50%)\
+      scale(1.08);\
+  \}\
+\
+\}\
+\
+.visual-lines \{\
+  position: absolute;\
+\
+  inset: 0;\
+\
+  background:\
+    repeating-linear-gradient(\
+      120deg,\
+      transparent 0 20px,\
+      rgba(255,255,255,.05)\
+      20px 21px\
+    );\
+\}\
+\
+.project-big-text \{\
+  position: absolute;\
+\
+  left: 50%;\
+  top: 50%;\
+\
+  transform:\
+    translate(-50%, -50%)\
+    translateZ(50px);\
+\
+  font-size:\
+    clamp(\
+      25px,\
+      3vw,\
+      50px\
+    );\
+\
+  font-weight: 900;\
+\
+  letter-spacing: -3px;\
+\}\
+\
+.project-tag \{\
+  position: absolute;\
+\
+  left: 14px;\
+  bottom: 14px;\
+\
+  color: #888;\
+\
+  font-size: 6px;\
+\
+  letter-spacing: 1px;\
+\}\
+\
+.project-footer \{\
+  margin-top: 11px;\
+\
+  display: flex;\
+\
+  justify-content: space-between;\
+\
+  align-items: flex-start;\
+\}\
+\
+.project-footer h3 \{\
+  font-size: 9px;\
+\
+  letter-spacing: .8px;\
+\}\
+\
+.project-footer p,\
+.project-footer > span \{\
+  margin-top: 4px;\
+\
+  color: #666;\
+\
+  font-size: 6px;\
+\}\
+\
+\
+/* ==================================================\
+   ABOUT\
+================================================== */\
+\
+.about-page \{\
+  height: 100%;\
+\
+  padding:\
+    16% 12%\
+    10%;\
+\
+  display: grid;\
+\
+  grid-template-columns:\
+    1fr\
+    1fr;\
+\
+  gap: 12%;\
+\}\
+\
+.about-title h2 \{\
+  margin-top: 18px;\
+\
+  font-size:\
+    clamp(\
+      38px,\
+      4vw,\
+      65px\
+    );\
+\
+  line-height: .9;\
+\
+  letter-spacing: -3px;\
+\}\
+\
+.about-lead \{\
+  color: #e5e5e5;\
+\
+  font-size:\
+    clamp(\
+      17px,\
+      1.6vw,\
+      26px\
+    );\
+\
+  line-height: 1.25;\
+\}\
+\
+.about-copy \{\
+  margin-top: 22px;\
+\
+  color: #777;\
+\
+  font-size: 8px;\
+\
+  line-height: 1.75;\
+\}\
+\
+.services \{\
+  margin-top: 35px;\
+\
+  border-top:\
+    1px solid #343434;\
+\}\
+\
+.service-row \{\
+  display: grid;\
+\
+  grid-template-columns:\
+    50px\
+    1fr\
+    auto;\
+\
+  align-items: center;\
+\
+  padding:\
+    12px 0;\
+\
+  border-bottom:\
+    1px solid #343434;\
+\
+  transition:\
+    padding .3s ease,\
+    background .3s ease;\
+\}\
+\
+.service-row:hover \{\
+  padding-left: 9px;\
+\
+  background:\
+    rgba(255,255,255,.025);\
+\}\
+\
+.service-row span \{\
+  color: #555;\
+\
+  font-size: 7px;\
+\}\
+\
+.service-row strong \{\
+  font-size: 8px;\
+\
+  letter-spacing: .8px;\
+\}\
+\
+.service-row em \{\
+  color: #777;\
+\
+  font-size: 10px;\
+\
+  font-style: normal;\
+\}\
+\
+\
+/* ==================================================\
+   CONTACT\
+================================================== */\
+\
+.contact-page \{\
+  height: 100%;\
+\
+  padding:\
+    15% 12%\
+    9%;\
+\
+  display: grid;\
+\
+  grid-template-columns:\
+    1fr\
+    1fr;\
+\
+  gap: 12%;\
+\}\
+\
+.contact-copy h2 \{\
+  margin-top: 18px;\
+\
+  font-size:\
+    clamp(\
+      40px,\
+      4vw,\
+      68px\
+    );\
+\
+  line-height: .88;\
+\
+  letter-spacing: -3px;\
+\}\
+\
+.contact-copy p \{\
+  margin-top: 20px;\
+\
+  max-width: 260px;\
+\
+  color: #777;\
+\
+  font-size: 8px;\
+\
+  line-height: 1.7;\
+\}\
+\
+.contact-form \{\
+  display: flex;\
+\
+  flex-direction: column;\
+\
+  gap: 15px;\
+\}\
+\
+.field \{\
+  display: flex;\
+\
+  flex-direction: column;\
+\
+  gap: 6px;\
+\}\
+\
+.field label \{\
+  color: #666;\
+\
+  font-size: 6px;\
+\
+  letter-spacing: 1.2px;\
+\}\
+\
+.field input,\
+.field textarea \{\
+  border: 0;\
+\
+  border-bottom:\
+    1px solid #343434;\
+\
+  outline: none;\
+\
+  padding:\
+    8px 0;\
+\
+  background: transparent;\
+\
+  color: white;\
+\
+  font-size: 8px;\
+\
+  transition:\
+    border-color .3s ease;\
+\}\
+\
+.field input:focus,\
+.field textarea:focus \{\
+  border-color:\
+    #999;\
+\}\
+\
+.field textarea \{\
+  height: 55px;\
+\
+  resize: none;\
+\}\
+\
+.send \{\
+  width: 180px;\
+\
+  align-self: flex-end;\
+\
+  margin-top: 4px;\
+\
+  padding:\
+    12px 14px;\
+\
+  display: flex;\
+\
+  justify-content: space-between;\
+\
+  background: white;\
+\
+  color: #151515;\
+\
+  font-size: 7px;\
+\
+  cursor: pointer;\
+\}\
+\
+\
+/* ==================================================\
+   SOCIALS\
+================================================== */\
+\
+.socials \{\
+  position: absolute;\
+\
+  left: 9.5%;\
+  bottom: 8%;\
+\
+  z-index: 200;\
+\
+  display: flex;\
+\
+  flex-direction: column;\
+\
+  gap: 10px;\
+\}\
+\
+.socials a \{\
+  color: #999;\
+\
+  font-size: 7px;\
+\
+  text-decoration: none;\
+\
+  transition:\
+    transform .25s ease,\
+    color .25s ease;\
+\}\
+\
+.socials a:hover \{\
+  color: white;\
+\
+  transform:\
+    translateX(4px);\
+\}\
+\
+\
+/* ==================================================\
+   SCROLL SIDE\
+================================================== */\
+\
+.scroll-side \{\
+  position: absolute;\
+\
+  right: 8%;\
+  bottom: 12%;\
+\
+  z-index: 200;\
+\
+  display: flex;\
+\
+  align-items: center;\
+\
+  gap: 8px;\
+\
+  transform:\
+    rotate(90deg);\
+\
+  transform-origin:\
+    right center;\
+\}\
+\
+.scroll-side > span \{\
+  color: #888;\
+\
+  font-size: 7px;\
+\}\
+\
+.scroll-track \{\
+  width: 42px;\
+  height: 1px;\
+\
+  overflow: hidden;\
+\
+  background: #3b3b3b;\
+\}\
+\
+.scroll-track span \{\
+  display: block;\
+\
+  width: 16px;\
+  height: 100%;\
+\
+  background: #aaa;\
+\
+  animation:\
+    scrollMotion\
+    2s\
+    ease-in-out\
+    infinite;\
+\}\
+\
+@keyframes scrollMotion \{\
+\
+  0% \{\
+    transform:\
+      translateX(-20px);\
+  \}\
+\
+  50% \{\
+    transform:\
+      translateX(40px);\
+  \}\
+\
+  100% \{\
+    transform:\
+      translateX(-20px);\
+  \}\
+\
+\}\
+\
+\
+/* ==================================================\
+   PAGE COUNTER\
+================================================== */\
+\
+.page-counter \{\
+  position: absolute;\
+\
+  left: 50%;\
+  bottom: 7%;\
+\
+  z-index: 200;\
+\
+  transform:\
+    translateX(-50%);\
+\
+  display: flex;\
+\
+  align-items: center;\
+\
+  gap: 9px;\
+\
+  color: #555;\
+\
+  font-size: 6px;\
+\}\
+\
+.page-line \{\
+  width: 55px;\
+  height: 1px;\
+\
+  background: #333;\
+\
+  overflow: hidden;\
+\}\
+\
+.page-line span \{\
+  display: block;\
+\
+  width: 25%;\
+  height: 100%;\
+\
+  background: #aaa;\
+\
+  transition:\
+    width .5s\
+    cubic-bezier(.16,1,.3,1);\
+\}\
+\
+\
+/* ==================================================\
+   STATUS\
+================================================== */\
+\
+.status \{\
+  position: absolute;\
+\
+  left: 50%;\
+  bottom: 2.8%;\
+\
+  transform:\
+    translateX(-50%);\
+\
+  z-index: 200;\
+\
+  display: flex;\
+\
+  align-items: center;\
+\
+  gap: 6px;\
+\
+  color: #4f4f4f;\
+\
+  font-size: 5px;\
+\
+  letter-spacing: 1px;\
+\}\
+\
+.status-dot \{\
+  width: 4px;\
+  height: 4px;\
+\
+  border-radius: 50%;\
+\
+  background: #8f8f8f;\
+\
+  box-shadow:\
+    0 0 8px\
+    rgba(255,255,255,.3);\
+\
+  animation:\
+    statusPulse\
+    2s ease-in-out\
+    infinite;\
+\}\
+\
+@keyframes statusPulse \{\
+\
+  50% \{\
+    opacity: .3;\
+  \}\
+\
+\}\
+\
+\
+/* ==================================================\
+   MOBILE\
+================================================== */\
+\
+@media (max-width: 900px) \{\
+\
+  .site \{\
+    width: 92vw;\
+  \}\
+\
+  .header \{\
+    left: 6%;\
+    right: 6%;\
+  \}\
+\
+  .nav \{\
+    gap: 20px;\
+  \}\
+\
+  .header-actions \{\
+    display: none;\
+  \}\
+\
+\}\
+\
+@media (max-width: 700px) \{\
+\
+  body \{\
+    overflow: hidden;\
+  \}\
+\
+  .scene \{\
+    background: #171717;\
+  \}\
+\
+  .site \{\
+    width: 100vw;\
+    height: 100svh;\
+\
+    max-height: none;\
+\
+    aspect-ratio: auto;\
+\
+    box-shadow: none;\
+  \}\
+\
+  .header \{\
+    top: 24px;\
+\
+    grid-template-columns:\
+      auto\
+      1fr;\
+\
+    gap: 15px;\
+  \}\
+\
+  .logo \{\
+    width: 31px;\
+    height: 31px;\
+\
+    font-size: 18px;\
+  \}\
+\
+  .nav \{\
+    justify-content: flex-end;\
+\
+    gap: 13px;\
+  \}\
+\
+  .nav button \{\
+    font-size: 6px;\
+  \}\
+\
+  .hero-title \{\
+    font-size: 18vw;\
+\
+    letter-spacing: -4px;\
+  \}\
+\
+  .hero-meta \{\
+    transform:\
+      translateX(20%);\
+  \}\
+\
+  .home-detail \{\
+    display: none;\
+  \}\
+\
+  .work-page,\
+  .about-page,\
+  .contact-page \{\
+    display: flex;\
+\
+    flex-direction: column;\
+\
+    overflow-y: auto;\
+\
+    gap: 35px;\
+\
+    padding:\
+      110px\
+      32px\
+      85px;\
+  \}\
+\
+  .project-grid \{\
+    grid-template-columns: 1fr;\
+\
+    gap: 25px;\
+  \}\
+\
+  .project-visual \{\
+    aspect-ratio: 16 / 9;\
+  \}\
+\
+  .socials \{\
+    left: 25px;\
+    bottom: 25px;\
+  \}\
+\
+  .scroll-side,\
+  .status \{\
+    display: none;\
+  \}\
+\
+  .page-counter \{\
+    bottom: 27px;\
+  \}\
+\
+  .cursor-dot,\
+  .cursor-ring \{\
+    display: none;\
+  \}\
+\
+\}}
