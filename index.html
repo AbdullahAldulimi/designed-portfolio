@@ -1,760 +1,516 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>DESIGNED — Portfolio</title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet"
-  >
-
-  <link
-    rel="stylesheet"
-    href="./style.css"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="Droply — a simpler way to manage large deliveries.">
+  <title>Droply — Delivery Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-
 <body>
 
-  <!-- CUSTOM CURSOR -->
-  <div class="cursor-dot" id="cursorDot"></div>
+<div class="app-shell">
 
-  <div class="cursor-ring" id="cursorRing"></div>
+  <!-- DESKTOP SIDEBAR -->
+  <aside class="sidebar">
+    <a href="#" class="brand" data-page="dashboard">
+      <span class="brand-mark">D</span>
+      <span>droply<span class="brand-dot">.</span></span>
+    </a>
 
-
-  <!-- PAGE INTRO -->
-  <div class="intro" id="intro">
-
-    <div class="intro-inner">
-
-      <span>CREATIVE STUDIO</span>
-
-      <div class="intro-line"></div>
-
-      <strong>DESIGNED</strong>
-
+    <div class="workspace">
+      <span class="workspace-avatar">D</span>
+      <div>
+        <strong>Droply Workspace</strong>
+        <small>Demo environment</small>
+      </div>
+      <span class="workspace-chevron">⌄</span>
     </div>
 
-  </div>
+    <div class="sidebar-section-label">WORKSPACE</div>
 
+    <nav class="side-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-page="dashboard">
+        <span class="nav-icon">▦</span> Dashboard
+      </button>
+      <button class="nav-link" data-page="deliveries">
+        <span class="nav-icon">▤</span> Deliveries
+      </button>
+      <button class="nav-link" data-page="tracking">
+        <span class="nav-icon">◎</span> Tracking
+      </button>
+      <button class="nav-link" data-page="book">
+        <span class="nav-icon">＋</span> New Delivery
+      </button>
+      <button class="nav-link" data-page="drivers">
+        <span class="nav-icon">♧</span> Drivers
+      </button>
+    </nav>
 
-  <!-- PAGE TRANSITION -->
-  <div class="transition-layer" id="transitionLayer">
+    <div class="sidebar-section-label">MANAGEMENT</div>
 
-    <div class="transition-number" id="transitionNumber">
-      01
+    <nav class="side-nav" aria-label="Management">
+      <button class="nav-link" data-page="messages">
+        <span class="nav-icon">▢</span> Messages
+      </button>
+      <button class="nav-link" data-page="payments">
+        <span class="nav-icon">▥</span> Payments
+      </button>
+      <button class="nav-link" data-page="settings">
+        <span class="nav-icon">⚙</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="demo-notice">
+        <span class="demo-indicator"></span>
+        Prototype mode
+        <small>Sample data only</small>
+      </div>
+      <button class="account-card" data-page="settings">
+        <span class="account-avatar">G</span>
+        <span>
+          <strong>Guest Account</strong>
+          <small>View profile</small>
+        </span>
+        <span>•••</span>
+      </button>
     </div>
+  </aside>
 
-  </div>
+  <!-- MAIN APPLICATION -->
+  <div class="main-area">
 
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="mobile-brand">droply<span>.</span></span>
+        <span class="breadcrumb">Workspace / <strong id="breadcrumb">Dashboard</strong></span>
+      </div>
+      <div class="topbar-right">
+        <span class="demo-tag">DEMO</span>
+        <button class="icon-button" aria-label="Notifications" id="notificationBtn">♧</button>
+        <button class="topbar-avatar" data-page="settings" aria-label="Profile">G</button>
+      </div>
+    </header>
 
-  <div class="scene">
+    <main class="content">
 
+      <!-- DASHBOARD -->
+      <section class="page active" id="dashboard">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">OVERVIEW</div>
+            <h1>Dashboard</h1>
+            <p>Manage and track your deliveries in one place.</p>
+          </div>
+          <button class="primary-button" data-page="book">+ New Delivery</button>
+        </div>
 
-    <main class="site" id="site">
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Total Deliveries</span>
+            <strong id="statTotal">0</strong>
+            <small>All demo requests</small>
+          </article>
+          <article class="stat-card">
+            <span>Active Deliveries</span>
+            <strong id="statActive">0</strong>
+            <small>Currently in progress</small>
+          </article>
+          <article class="stat-card">
+            <span>Completed</span>
+            <strong id="statCompleted">0</strong>
+            <small>Finished deliveries</small>
+          </article>
+          <article class="stat-card">
+            <span>Estimated Spend</span>
+            <strong id="statSpend">$0</strong>
+            <small>Demo estimates</small>
+          </article>
+        </div>
 
+        <div class="dashboard-grid">
 
-      <!-- BACKGROUND EFFECTS -->
+          <section class="panel delivery-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Recent Deliveries</h2>
+                <p>Your latest delivery requests</p>
+              </div>
+              <button class="text-button" data-page="deliveries">View all →</button>
+            </div>
 
-      <div class="noise"></div>
+            <div class="filter-row" id="dashboardFilters">
+              <button class="filter active" data-filter="all">All</button>
+              <button class="filter" data-filter="active">Active</button>
+              <button class="filter" data-filter="completed">Completed</button>
+            </div>
 
-      <div class="cursor-glow" id="cursorGlow"></div>
+            <div id="recentDeliveries" class="delivery-list"></div>
+          </section>
 
-      <div class="bg-circle bg-circle-one"></div>
+          <section class="panel overview-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Delivery Overview</h2>
+                <p>Selected delivery information</p>
+              </div>
+              <span class="live-label">● DEMO</span>
+            </div>
 
-      <div class="bg-circle bg-circle-two"></div>
+            <div class="vehicle-preview">
+              <div class="vehicle-preview-label">VEHICLE INFORMATION</div>
+              <div class="truck-illustration">🚚</div>
+              <div class="vehicle-preview-footer">
+                <span id="overviewVehicle">No vehicle selected</span>
+                <strong id="overviewCapacity">—</strong>
+              </div>
+            </div>
 
+            <div class="detail-section">
+              <h3>Route Overview</h3>
+              <div class="route-preview">
+                <div class="route-path"></div>
+                <div class="route-point start"></div>
+                <div class="route-point end"></div>
+                <span class="route-placeholder">Demo route preview</span>
+              </div>
+            </div>
 
-      <!-- HEADER -->
-
-      <header class="header">
-
-
-        <button
-          class="logo magnetic tab-button"
-          data-page="home"
-          aria-label="Home"
-        >
-          D
-        </button>
-
-
-        <nav class="nav">
-
-          <button
-            class="tab-button active-nav"
-            data-page="home"
-          >
-            HOME
-          </button>
-
-          <button
-            class="tab-button"
-            data-page="work"
-          >
-            WORK
-          </button>
-
-          <button
-            class="tab-button"
-            data-page="about"
-          >
-            ABOUT
-          </button>
-
-          <button
-            class="tab-button"
-            data-page="contact"
-          >
-            CONTACT
-          </button>
-
-        </nav>
-
-
-        <div class="header-actions">
-
-          <button class="language">
-            EN
-          </button>
-
-          <button
-            class="talk-button magnetic tab-button"
-            data-page="contact"
-          >
-            LET'S TALK
-
-            <span>
-              ↗
-            </span>
-          </button>
+            <div id="overviewDetails" class="overview-details">
+              <p>Select a delivery to see its details.</p>
+            </div>
+          </section>
 
         </div>
 
-
-      </header>
-
-
-
-      <!-- ==================================================
-           HOME
-      =================================================== -->
-
-      <section
-        class="page active"
-        id="home"
-      >
-
-
-        <div class="home">
-
-
-          <div class="home-center">
-
-
-            <div
-              class="home-eyebrow reveal-up"
-            >
-              I AM
+        <section class="panel quick-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Quick Actions</h2>
+              <p>Get things moving</p>
             </div>
-
-
-            <h1
-              class="hero-title"
-              data-split
-            >
-              DESIGNED
-            </h1>
-
-
-            <div class="hero-meta reveal-up">
-
-              <span>
-                UX/UI DESIGN
-              </span>
-
-              <span>
-                AND DIGITAL
-              </span>
-
-              <span>
-                BRANDING STUDIO
-              </span>
-
-            </div>
-
-
           </div>
-
-
-          <div class="home-index">
-            001
-          </div>
-
-
-          <div class="home-detail home-detail-left">
-
-            <span>
-              BASED IN
-            </span>
-
-            <strong>
-              MELBOURNE
-            </strong>
-
-          </div>
-
-
-          <div class="home-detail home-detail-right">
-
-            <span>
-              AVAILABLE FOR
-            </span>
-
-            <strong>
-              SELECT PROJECTS
-            </strong>
-
-          </div>
-
-
-        </div>
-
-
-      </section>
-
-
-
-      <!-- ==================================================
-           WORK
-      =================================================== -->
-
-      <section
-        class="page"
-        id="work"
-      >
-
-
-        <div class="work-page">
-
-
-          <div class="section-intro">
-
-
-            <div class="section-kicker">
-              01 / SELECTED PROJECTS
-            </div>
-
-
-            <h2>
-              WORK
-            </h2>
-
-
-            <p>
-              Digital experiences, identities and interfaces
-              built around clean systems and bold ideas.
-            </p>
-
-
-          </div>
-
-
-
-          <div class="project-grid">
-
-
-            <article class="project-card tilt-card">
-
-
-              <div class="project-visual visual-one">
-
-                <div class="visual-grid"></div>
-
-                <div class="project-big-text">
-                  VOID
-                </div>
-
-                <span class="project-tag">
-                  BRAND / 01
-                </span>
-
-              </div>
-
-
-              <div class="project-footer">
-
-                <div>
-                  <h3>
-                    VOID SYSTEM
-                  </h3>
-
-                  <p>
-                    Digital identity
-                  </p>
-                </div>
-
-                <span>
-                  2026
-                </span>
-
-              </div>
-
-
-            </article>
-
-
-
-            <article class="project-card tilt-card">
-
-
-              <div class="project-visual visual-two">
-
-                <div class="project-orb"></div>
-
-                <div class="project-big-text">
-                  NØR
-                </div>
-
-                <span class="project-tag">
-                  WEB / 02
-                </span>
-
-              </div>
-
-
-              <div class="project-footer">
-
-                <div>
-
-                  <h3>
-                    NØR STUDIO
-                  </h3>
-
-                  <p>
-                    Website / UX
-                  </p>
-
-                </div>
-
-                <span>
-                  2026
-                </span>
-
-              </div>
-
-
-            </article>
-
-
-
-            <article class="project-card tilt-card">
-
-
-              <div class="project-visual visual-three">
-
-                <div class="visual-lines"></div>
-
-                <div class="project-big-text">
-                  24
-                </div>
-
-                <span class="project-tag">
-                  UI / 03
-                </span>
-
-              </div>
-
-
-              <div class="project-footer">
-
-                <div>
-
-                  <h3>
-                    FORM 24
-                  </h3>
-
-                  <p>
-                    Interface system
-                  </p>
-
-                </div>
-
-                <span>
-                  2026
-                </span>
-
-              </div>
-
-
-            </article>
-
-
-          </div>
-
-
-        </div>
-
-
-      </section>
-
-
-
-      <!-- ==================================================
-           ABOUT
-      =================================================== -->
-
-      <section
-        class="page"
-        id="about"
-      >
-
-
-        <div class="about-page">
-
-
-          <div class="about-title">
-
-
-            <div class="section-kicker">
-              02 / ABOUT
-            </div>
-
-
-            <h2>
-              QUIET<br>
-              DESIGN.<br>
-              LOUD<br>
-              IMPACT.
-            </h2>
-
-
-          </div>
-
-
-
-          <div class="about-content">
-
-
-            <p class="about-lead">
-              We build digital experiences that feel
-              intentional, modern and unmistakably clear.
-            </p>
-
-
-            <p class="about-copy">
-              No unnecessary clutter. No random visual effects.
-              Every detail has a purpose — from typography
-              and spacing to motion and interaction.
-            </p>
-
-
-
-            <div class="services">
-
-
-              <div class="service-row">
-
-                <span>
-                  01
-                </span>
-
-                <strong>
-                  WEB DESIGN
-                </strong>
-
-                <em>
-                  ↗
-                </em>
-
-              </div>
-
-
-              <div class="service-row">
-
-                <span>
-                  02
-                </span>
-
-                <strong>
-                  UI / UX
-                </strong>
-
-                <em>
-                  ↗
-                </em>
-
-              </div>
-
-
-              <div class="service-row">
-
-                <span>
-                  03
-                </span>
-
-                <strong>
-                  BRANDING
-                </strong>
-
-                <em>
-                  ↗
-                </em>
-
-              </div>
-
-
-              <div class="service-row">
-
-                <span>
-                  04
-                </span>
-
-                <strong>
-                  ART DIRECTION
-                </strong>
-
-                <em>
-                  ↗
-                </em>
-
-              </div>
-
-
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-
-      </section>
-
-
-
-      <!-- ==================================================
-           CONTACT
-      =================================================== -->
-
-      <section
-        class="page"
-        id="contact"
-      >
-
-
-        <div class="contact-page">
-
-
-          <div class="contact-copy">
-
-
-            <div class="section-kicker">
-              03 / CONTACT
-            </div>
-
-
-            <h2>
-              LET'S<br>
-              BUILD<br>
-              SOMETHING.
-            </h2>
-
-
-            <p>
-              Have an idea worth making real?
-              Tell us about the project.
-            </p>
-
-
-          </div>
-
-
-
-          <form
-            class="contact-form"
-            id="contactForm"
-          >
-
-
-            <div class="field">
-
-              <label>
-                YOUR NAME
-              </label>
-
-              <input
-                type="text"
-                placeholder="Name"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                EMAIL
-              </label>
-
-              <input
-                type="email"
-                placeholder="Email address"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                PROJECT TYPE
-              </label>
-
-              <input
-                type="text"
-                placeholder="Website / Brand / UI"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                MESSAGE
-              </label>
-
-              <textarea
-                placeholder="Tell us what you're thinking..."
-              ></textarea>
-
-            </div>
-
-
-            <button
-              type="button"
-              class="send magnetic"
-            >
-
-              <span>
-                SEND MESSAGE
-              </span>
-
-              <span>
-                ↗
-              </span>
-
+          <div class="quick-grid">
+            <button class="quick-action" data-page="book">
+              <span>＋</span>
+              <strong>Book a Delivery</strong>
+              <small>Create a new request</small>
             </button>
-
-
-          </form>
-
-
-        </div>
-
-
+            <button class="quick-action" data-page="tracking">
+              <span>◎</span>
+              <strong>Track Delivery</strong>
+              <small>View delivery progress</small>
+            </button>
+            <button class="quick-action" data-page="drivers">
+              <span>▣</span>
+              <strong>Driver Portal</strong>
+              <small>Manage demo jobs</small>
+            </button>
+          </div>
+        </section>
       </section>
 
-
-
-      <!-- SOCIALS -->
-
-      <aside class="socials">
-
-        <a href="#">
-          IG
-        </a>
-
-        <a href="#">
-          X
-        </a>
-
-        <a href="#">
-          IN
-        </a>
-
-      </aside>
-
-
-
-      <!-- RIGHT SCROLL -->
-
-      <div class="scroll-side">
-
-        <span>
-          SCROLL
-        </span>
-
-        <div class="scroll-track">
-
-          <span></span>
-
+      <!-- DELIVERIES -->
+      <section class="page" id="deliveries">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">DELIVERY MANAGEMENT</div>
+            <h1>My Deliveries</h1>
+            <p>Review your delivery requests and their progress.</p>
+          </div>
+          <button class="primary-button" data-page="book">+ New Delivery</button>
         </div>
 
-      </div>
+        <div class="panel">
+          <div class="panel-heading">
+            <h2>All Deliveries</h2>
+            <span class="subtle-label" id="deliveryCount">0 requests</span>
+          </div>
+          <div id="allDeliveries" class="delivery-list"></div>
+        </div>
+      </section>
 
-
-
-      <!-- PAGE COUNTER -->
-
-      <div class="page-counter">
-
-        <span id="pageNumber">
-          01
-        </span>
-
-        <div class="page-line">
-
-          <span id="pageProgress"></span>
-
+      <!-- TRACKING -->
+      <section class="page" id="tracking">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">DELIVERY MONITORING</div>
+            <h1>Tracking</h1>
+            <p>Follow the progress of your selected delivery.</p>
+          </div>
         </div>
 
-        <span>
-          04
-        </span>
+        <div class="tracking-layout">
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Delivery Route</h2>
+              <span class="live-label">SIMULATED</span>
+            </div>
+            <div class="tracking-map">
+              <div class="map-grid"></div>
+              <div class="map-line"></div>
+              <span class="map-pin pickup-pin">A</span>
+              <span class="map-pin dropoff-pin">B</span>
+              <span class="map-truck">🚚</span>
+              <div class="map-watermark">DEMO MAP · NOT LIVE GPS</div>
+            </div>
+          </section>
 
-      </div>
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Delivery Details</h2>
+            </div>
+            <div id="trackingDetails"></div>
+          </section>
+        </div>
+      </section>
 
+      <!-- NEW DELIVERY -->
+      <section class="page" id="book">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">NEW REQUEST</div>
+            <h1>Book a Delivery</h1>
+            <p>Enter your delivery details to receive a demo estimate.</p>
+          </div>
+        </div>
 
+        <form id="bookingForm" class="booking-layout">
+          <div class="panel form-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Delivery Information</h2>
+                <p>Where should we collect and deliver your goods?</p>
+              </div>
+            </div>
 
-      <!-- BOTTOM STATUS -->
+            <div class="field-group">
+              <label for="pickup">Pickup Address</label>
+              <input id="pickup" name="pickup" type="text"
+                     placeholder="Enter full pickup address" required>
+            </div>
 
-      <div class="status">
+            <div class="field-group">
+              <label for="dropoff">Drop-off Address</label>
+              <input id="dropoff" name="dropoff" type="text"
+                     placeholder="Enter full delivery address" required>
+            </div>
 
-        <span class="status-dot"></span>
+            <div class="form-row">
+              <div class="field-group">
+                <label for="cargoType">Cargo Type</label>
+                <select id="cargoType" name="cargoType">
+                  <option value="Pallets">Pallets</option>
+                  <option value="Furniture">Furniture</option>
+                  <option value="Machinery">Machinery</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="distance">Estimated Distance (km)</label>
+                <input id="distance" name="distance" type="number"
+                       min="1" max="2000" step="0.1"
+                       placeholder="e.g. 25" required>
+              </div>
+            </div>
 
-        AVAILABLE FOR SELECT PROJECTS
+            <div class="field-group">
+              <label for="cargoNotes">Cargo Details</label>
+              <textarea id="cargoNotes" name="cargoNotes" rows="3"
+                        placeholder="Number of pallets, dimensions, weight or special requirements"></textarea>
+            </div>
 
-      </div>
+            <div class="field-group">
+              <label for="deliveryTime">Delivery Time</label>
+              <select id="deliveryTime" name="deliveryTime">
+                <option value="ASAP">As soon as possible</option>
+                <option value="Today">Today</option>
+                <option value="Tomorrow">Tomorrow</option>
+                <option value="Scheduled">Schedule later</option>
+              </select>
+            </div>
+          </div>
 
+          <div class="booking-side">
+            <div class="panel">
+              <div class="panel-heading">
+                <h2>Vehicle Selection</h2>
+              </div>
+
+              <div class="vehicle-options">
+                <button type="button" class="vehicle-option selected" data-vehicle="ute">
+                  <span class="vehicle-symbol">🛻</span>
+                  <span>
+                    <strong>Ute / Small Truck</strong>
+                    <small>Small loads · Up to 1 pallet</small>
+                  </span>
+                  <span class="selection-circle"></span>
+                </button>
+
+                <button type="button" class="vehicle-option" data-vehicle="medium">
+                  <span class="vehicle-symbol">🚚</span>
+                  <span>
+                    <strong>Medium Truck</strong>
+                    <small>Medium loads · Up to 8 pallets</small>
+                  </span>
+                  <span class="selection-circle"></span>
+                </button>
+
+                <button type="button" class="vehicle-option" data-vehicle="large">
+                  <span class="vehicle-symbol">🚛</span>
+                  <span>
+                    <strong>Large Truck</strong>
+                    <small>Large freight and heavy loads</small>
+                  </span>
+                  <span class="selection-circle"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="panel estimate-panel">
+              <span class="eyebrow">ESTIMATED PRICE</span>
+              <div class="estimate-amount" id="estimatePrice">$0.00</div>
+              <p>Illustrative estimate only. Not a real quote.</p>
+              <button type="submit" class="primary-button full-width">
+                Create Demo Request →
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- DRIVERS -->
+      <section class="page" id="drivers">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">DRIVER PORTAL</div>
+            <h1>Drivers</h1>
+            <p>Manage delivery opportunities in the demo environment.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid driver-stats">
+          <article class="stat-card">
+            <span>Available Jobs</span>
+            <strong id="availableJobsCount">0</strong>
+            <small>Demo delivery requests</small>
+          </article>
+          <article class="stat-card">
+            <span>Assigned Jobs</span>
+            <strong id="assignedJobsCount">0</strong>
+            <small>Accepted demo requests</small>
+          </article>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <h2>Available Delivery Requests</h2>
+          </div>
+          <div id="driverJobs"></div>
+        </div>
+      </section>
+
+      <!-- MESSAGES -->
+      <section class="page" id="messages">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">COMMUNICATIONS</div>
+            <h1>Messages</h1>
+            <p>Your delivery conversations.</p>
+          </div>
+        </div>
+        <div class="panel empty-state">
+          <div class="empty-icon">▢</div>
+          <h2>No conversations yet</h2>
+          <p>Real driver messaging will be added in a future version.</p>
+        </div>
+      </section>
+
+      <!-- PAYMENTS -->
+      <section class="page" id="payments">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">BILLING</div>
+            <h1>Payments</h1>
+            <p>Review your estimated delivery costs.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-heading">
+            <h2>Demo Payment History</h2>
+          </div>
+          <div id="paymentHistory"></div>
+          <p class="disclaimer">
+            No payments are collected or processed in this prototype.
+          </p>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="page" id="settings">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">PREFERENCES</div>
+            <h1>Settings</h1>
+            <p>Manage your Droply prototype.</p>
+          </div>
+        </div>
+
+        <div class="panel settings-panel">
+          <h2>Account</h2>
+          <div class="setting-row">
+            <span>Account Type</span>
+            <strong>Guest / Demo</strong>
+          </div>
+          <div class="setting-row">
+            <span>App Version</span>
+            <strong>2.0 Prototype</strong>
+          </div>
+          <div class="setting-row">
+            <span>Data Storage</span>
+            <strong>This browser only</strong>
+          </div>
+          <div class="setting-row">
+            <span>Currency</span>
+            <strong>AUD</strong>
+          </div>
+
+          <div class="settings-actions">
+            <button id="resetDemoBtn" class="danger-button">
+              Clear Demo Bookings
+            </button>
+          </div>
+        </div>
+      </section>
 
     </main>
-
-
   </div>
+</div>
 
+<!-- MOBILE NAVIGATION -->
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <button class="mobile-nav-link active" data-page="dashboard">
+    <span>▦</span> Home
+  </button>
+  <button class="mobile-nav-link" data-page="deliveries">
+    <span>▤</span> Deliveries
+  </button>
+  <button class="mobile-nav-link mobile-create" data-page="book">
+    <span>＋</span> Book
+  </button>
+  <button class="mobile-nav-link" data-page="tracking">
+    <span>◎</span> Tracking
+  </button>
+  <button class="mobile-nav-link" data-page="settings">
+    <span>⚙</span> Profile
+  </button>
+</nav>
 
-  <script src="./script.js"></script>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 </body>
 </html>
