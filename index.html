@@ -1,516 +1,131 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-AU">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101114">
-  <meta name="description" content="Droply — a simpler way to manage large deliveries.">
-  <title>Droply — Delivery Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111215">
+  <meta name="description" content="Droply logistics dashboard prototype. Manage freight requests, shipments, and demo delivery tracking.">
+  <title>Droply — Logistics Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700;750;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.0.2">
+  <script src="script.js?v=3.0.2" defer></script>
 </head>
 <body>
+  <!-- Reusable icons and vehicle silhouettes. No icon library required. -->
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="ic-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/></symbol>
+    <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M20 10c0 5.5-8 11-8 11S4 15.5 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.7"/></symbol>
+    <symbol id="ic-box" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5Zm-9 5v10l9 5 9-5V7M12 12v10"/></symbol>
+    <symbol id="ic-truck" viewBox="0 0 24 24"><path d="M3 6h11v11H3zM14 10h4l3 4v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="ic-file" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4v15H6zM14 2.5v5h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="ic-chart" viewBox="0 0 24 24"><path d="M4 20h16M6 16V9M12 16V4M18 16v-7"/></symbol>
+    <symbol id="ic-message" viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4Z"/><path d="M8 9h8M8 13h5"/></symbol>
+    <symbol id="ic-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M10 2h4l.7 2.4 2 1.1 2.4-.8 2 3.5-1.8 1.8v2.2l1.8 1.8-2 3.5-2.4-.8-2 1.1L14 20h-4l-.7-2.2-2-1.1-2.4.8-2-3.5 1.8-1.8V10L3 8.2l2-3.5 2.4.8 2-1.1L10 2Z"/></symbol>
+    <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="ic-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+    <symbol id="ic-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="ic-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="ic-package" viewBox="0 0 24 24"><path d="M3 7 12 2l9 5v10l-9 5-9-5V7Z"/><path d="m3 7 9 5 9-5M12 12v10M8 4l9 5"/></symbol>
+    <symbol id="ic-rotate" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 4v7h-7"/></symbol>
+    <symbol id="ic-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="ic-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3ZM10 20h4"/></symbol>
+    <symbol id="ic-location" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></symbol>
+    <symbol id="truck-art" viewBox="0 0 560 205">
+      <defs><linearGradient id="cab-metal" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="#e5e7eb"/><stop offset=".45" stop-color="#9da4ad"/><stop offset="1" stop-color="#626b75"/></linearGradient><linearGradient id="trailer-metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#969da7"/><stop offset=".47" stop-color="#d6d9dd"/><stop offset="1" stop-color="#737c85"/></linearGradient></defs>
+      <ellipse cx="280" cy="186" rx="265" ry="8" fill="#030405" opacity=".55"/>
+      <rect x="181" y="46" width="350" height="119" rx="2" fill="url(#trailer-metal)" stroke="#d5d8dd" stroke-width="2"/>
+      <rect x="186" y="51" width="339" height="104" fill="#9ba1aa" opacity=".19"/>
+      <rect x="184" y="157" width="347" height="8" fill="#434951"/>
+      <path d="M18 137V91l18-37h61l23 28v59H18Z" fill="url(#cab-metal)" stroke="#d3d7dc" stroke-width="2"/>
+      <path d="M41 61h49l14 23H30Z" fill="#424d59" stroke="#edf0f4" stroke-width="2"/>
+      <path d="M43 63h14L40 82H31Z" fill="#77838c" opacity=".6"/>
+      <path d="M18 104h102M20 144h145" stroke="#4d5560" stroke-width="4"/>
+      <rect x="120" y="128" width="65" height="31" rx="2" fill="#515963"/>
+      <rect x="108" y="153" width="425" height="13" fill="#282d34"/>
+      <rect x="26" y="144" width="96" height="22" fill="#414750"/>
+      <rect x="45" y="105" width="36" height="4" rx="2" fill="#323a43"/>
+      <rect x="15" y="117" width="5" height="13" fill="#f8d6a7"/>
+      <rect x="78" y="154" width="410" height="7" fill="#434a52"/>
+      <g fill="#11141a" stroke="#515862" stroke-width="4"><circle cx="65" cy="169" r="21"/><circle cx="132" cy="169" r="21"/><circle cx="425" cy="169" r="21"/><circle cx="482" cy="169" r="21"/></g>
+      <g fill="#737d87" stroke="#b7bec7" stroke-width="2"><circle cx="65" cy="169" r="10"/><circle cx="132" cy="169" r="10"/><circle cx="425" cy="169" r="10"/><circle cx="482" cy="169" r="10"/></g>
+      <path d="M181 50v104" stroke="#e3e6ea" opacity=".5"/>
+    </symbol>
+    <symbol id="van-art" viewBox="0 0 560 205"><ellipse cx="270" cy="182" rx="260" ry="8" fill="#030405" opacity=".5"/><path d="M33 144V86q0-24 27-24h277q26 0 44 23l36 46h70v26H33Z" fill="#babfc7" stroke="#e4e6eb" stroke-width="3"/><path d="M70 70h264q21 0 37 18l18 24H70Z" fill="#7d8795"/><path d="M344 72v72M80 132h360" stroke="#5c6570" stroke-width="3"/><rect x="36" y="139" width="450" height="19" fill="#434951"/><rect x="452" y="122" width="22" height="8" rx="2" fill="#ffd3a1"/><g fill="#11141a" stroke="#565e68" stroke-width="4"><circle cx="132" cy="161" r="24"/><circle cx="399" cy="161" r="24"/></g><g fill="#77818c" stroke="#c3c8d0" stroke-width="2"><circle cx="132" cy="161" r="12"/><circle cx="399" cy="161" r="12"/></g></symbol>
+    <symbol id="ute-art" viewBox="0 0 560 205"><ellipse cx="275" cy="180" rx="248" ry="8" fill="#030405" opacity=".5"/><path d="M32 144V91h151l34-42h91l47 56h149v54H32Z" fill="#abb2bc" stroke="#e6e8ec" stroke-width="3"/><path d="M228 58h73l35 47H197Z" fill="#4d5966" stroke="#cdd4db" stroke-width="3"/><path d="M353 107h145M201 111v40" stroke="#727b84" stroke-width="3"/><rect x="36" y="150" width="469" height="12" fill="#414750"/><g fill="#11141a" stroke="#545c66" stroke-width="4"><circle cx="130" cy="162" r="25"/><circle cx="408" cy="162" r="25"/></g><g fill="#78838e" stroke="#c4cad2" stroke-width="2"><circle cx="130" cy="162" r="12"/><circle cx="408" cy="162" r="12"/></g></symbol>
+  </svg>
 
-<div class="app-shell">
+  <div class="mobile-header"><a href="#" class="mobile-logo" data-go="dashboard"><span class="logo-glyph">◈</span> Droply</a><span class="environment-pill"><span></span> DEMO</span><button class="icon-btn" id="mobileCreate" type="button" aria-label="Create shipment"><svg><use href="#ic-plus"/></svg></button></div>
 
-  <!-- DESKTOP SIDEBAR -->
-  <aside class="sidebar">
-    <a href="#" class="brand" data-page="dashboard">
-      <span class="brand-mark">D</span>
-      <span>droply<span class="brand-dot">.</span></span>
-    </a>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a href="#" class="brand" data-go="dashboard"><span class="brand-symbol">◈</span><span><strong>Droply</strong><small>FREIGHT WORKSPACE</small></span></a>
+      <div class="side-divider"></div>
+      <div class="nav-heading">WORKSPACE</div>
+      <nav class="nav-list">
+        <button type="button" class="nav-button is-active" data-go="dashboard"><svg><use href="#ic-grid"/></svg><span>Dashboard</span></button>
+        <button type="button" class="nav-button" data-go="messages"><svg><use href="#ic-message"/></svg><span>Messages</span></button>
+        <button type="button" class="nav-button" data-go="drivers"><svg><use href="#ic-truck"/></svg><span>Drivers</span></button>
+        <button type="button" class="nav-button" data-go="tracking"><svg><use href="#ic-pin"/></svg><span>Tracking</span><span class="nav-count" id="trackingCount">8</span></button>
+        <button type="button" class="nav-button" data-go="requests"><svg><use href="#ic-box"/></svg><span>Requests</span></button>
+        <button type="button" class="nav-button" data-go="reports"><svg><use href="#ic-chart"/></svg><span>Reports</span></button>
+      </nav>
+      <div class="nav-heading secondary-heading">ACCOUNT</div>
+      <nav class="nav-list">
+        <button type="button" class="nav-button" data-go="billing"><svg><use href="#ic-file"/></svg><span>Billing</span></button>
+        <button type="button" class="nav-button" data-go="settings"><svg><use href="#ic-settings"/></svg><span>Settings</span></button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="workspace-state"><span class="state-led"></span><span>Demo workspace</span><small>Local browser data</small></div>
+      <button class="create-tile" id="sidebarCreate" type="button"><span class="create-circle"><svg><use href="#ic-plus"/></svg></span><strong>Create a request</strong><span>Start a demo delivery</span></button>
+      <div class="sidebar-account"><span class="account-avatar">D</span><span><strong>Droply workspace</strong><small>Guest access</small></span><svg><use href="#ic-chevron"/></svg></div>
+    </aside>
 
-    <div class="workspace">
-      <span class="workspace-avatar">D</span>
-      <div>
-        <strong>Droply Workspace</strong>
-        <small>Demo environment</small>
-      </div>
-      <span class="workspace-chevron">⌄</span>
-    </div>
+    <section class="queue-column" aria-label="Shipment list">
+      <header class="queue-header">
+        <div class="section-topline"><span>OPERATIONS / <strong id="queueCrumb">DASHBOARD</strong></span><button type="button" class="subtle-icon" id="quickCreate" aria-label="Create delivery"><svg><use href="#ic-plus"/></svg></button></div>
+        <div class="heading-line"><div><h1 id="queueTitle">Dashboard</h1><p id="queueSubtitle">Your freight, in one place.</p></div><span class="count-pill" id="resultCount">0</span></div>
+        <label class="search-field"><svg><use href="#ic-search"/></svg><input id="searchInput" type="search" placeholder="Search shipment ID or location" autocomplete="off" aria-label="Search shipments"><kbd>⌘ K</kbd></label>
+        <div class="filter-group" aria-label="Filter shipments"><button type="button" data-filter="all" class="filter-chip active">All <span id="filterAllCount">0</span></button><button type="button" data-filter="enroute" class="filter-chip">En route</button><button type="button" data-filter="waiting" class="filter-chip">Waiting</button><button type="button" data-filter="delivered" class="filter-chip">Delivered</button></div>
+      </header>
+      <div class="queue-scroll" id="queueScroll"><div class="shipment-grid" id="shipmentGrid"></div><div class="queue-empty" id="queueEmpty" hidden><svg><use href="#ic-search"/></svg><strong>No shipments found</strong><span>Try another search or filter.</span></div></div>
+      <div class="queue-footer"><span id="queueFooterText">0 shipments</span><span><span class="tiny-live"></span> SAMPLE DATA</span></div>
+    </section>
 
-    <div class="sidebar-section-label">WORKSPACE</div>
-
-    <nav class="side-nav" aria-label="Main navigation">
-      <button class="nav-link active" data-page="dashboard">
-        <span class="nav-icon">▦</span> Dashboard
-      </button>
-      <button class="nav-link" data-page="deliveries">
-        <span class="nav-icon">▤</span> Deliveries
-      </button>
-      <button class="nav-link" data-page="tracking">
-        <span class="nav-icon">◎</span> Tracking
-      </button>
-      <button class="nav-link" data-page="book">
-        <span class="nav-icon">＋</span> New Delivery
-      </button>
-      <button class="nav-link" data-page="drivers">
-        <span class="nav-icon">♧</span> Drivers
-      </button>
-    </nav>
-
-    <div class="sidebar-section-label">MANAGEMENT</div>
-
-    <nav class="side-nav" aria-label="Management">
-      <button class="nav-link" data-page="messages">
-        <span class="nav-icon">▢</span> Messages
-      </button>
-      <button class="nav-link" data-page="payments">
-        <span class="nav-icon">▥</span> Payments
-      </button>
-      <button class="nav-link" data-page="settings">
-        <span class="nav-icon">⚙</span> Settings
-      </button>
-    </nav>
-
-    <div class="sidebar-bottom">
-      <div class="demo-notice">
-        <span class="demo-indicator"></span>
-        Prototype mode
-        <small>Sample data only</small>
-      </div>
-      <button class="account-card" data-page="settings">
-        <span class="account-avatar">G</span>
-        <span>
-          <strong>Guest Account</strong>
-          <small>View profile</small>
-        </span>
-        <span>•••</span>
-      </button>
-    </div>
-  </aside>
-
-  <!-- MAIN APPLICATION -->
-  <div class="main-area">
-
-    <header class="topbar">
-      <div class="topbar-left">
-        <span class="mobile-brand">droply<span>.</span></span>
-        <span class="breadcrumb">Workspace / <strong id="breadcrumb">Dashboard</strong></span>
-      </div>
-      <div class="topbar-right">
-        <span class="demo-tag">DEMO</span>
-        <button class="icon-button" aria-label="Notifications" id="notificationBtn">♧</button>
-        <button class="topbar-avatar" data-page="settings" aria-label="Profile">G</button>
-      </div>
-    </header>
-
-    <main class="content">
-
-      <!-- DASHBOARD -->
-      <section class="page active" id="dashboard">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">OVERVIEW</div>
-            <h1>Dashboard</h1>
-            <p>Manage and track your deliveries in one place.</p>
-          </div>
-          <button class="primary-button" data-page="book">+ New Delivery</button>
-        </div>
-
-        <div class="stats-grid">
-          <article class="stat-card">
-            <span>Total Deliveries</span>
-            <strong id="statTotal">0</strong>
-            <small>All demo requests</small>
-          </article>
-          <article class="stat-card">
-            <span>Active Deliveries</span>
-            <strong id="statActive">0</strong>
-            <small>Currently in progress</small>
-          </article>
-          <article class="stat-card">
-            <span>Completed</span>
-            <strong id="statCompleted">0</strong>
-            <small>Finished deliveries</small>
-          </article>
-          <article class="stat-card">
-            <span>Estimated Spend</span>
-            <strong id="statSpend">$0</strong>
-            <small>Demo estimates</small>
-          </article>
-        </div>
-
-        <div class="dashboard-grid">
-
-          <section class="panel delivery-panel">
-            <div class="panel-heading">
-              <div>
-                <h2>Recent Deliveries</h2>
-                <p>Your latest delivery requests</p>
-              </div>
-              <button class="text-button" data-page="deliveries">View all →</button>
-            </div>
-
-            <div class="filter-row" id="dashboardFilters">
-              <button class="filter active" data-filter="all">All</button>
-              <button class="filter" data-filter="active">Active</button>
-              <button class="filter" data-filter="completed">Completed</button>
-            </div>
-
-            <div id="recentDeliveries" class="delivery-list"></div>
+    <main class="detail-column" id="detailColumn" aria-label="Shipment details">
+      <header class="detail-header">
+        <div class="shipment-heading"><div class="eyebrow">SELECTED SHIPMENT <span class="separator">/</span> DEMO</div><div class="shipment-name-row"><h2 id="selectedId">Select a shipment</h2><span class="status-badge" id="selectedStatus">—</span></div></div>
+        <div class="header-actions"><button type="button" class="outline-button" id="copyIdBtn"><svg><use href="#ic-copy"/></svg><span>Copy ID</span></button><button type="button" class="blue-button small" id="newRequestBtn"><svg><use href="#ic-plus"/></svg><span>New request</span></button></div>
+      </header>
+      <div class="detail-tabs" role="tablist" aria-label="Shipment detail sections"><button class="detail-tab active" data-tab="shipping" role="tab" aria-selected="true">Shipping info</button><button class="detail-tab" data-tab="vehicle" role="tab" aria-selected="false">Vehicle info</button><button class="detail-tab" data-tab="documents" role="tab" aria-selected="false">Documents</button><button class="detail-tab" data-tab="company" role="tab" aria-selected="false">Company</button><button class="detail-tab" data-tab="billing" role="tab" aria-selected="false">Billing</button></div>
+      <div class="detail-scroll" id="detailScroll">
+        <div id="specialView" hidden></div>
+        <div id="shipmentViews">
+          <section class="detail-view active" id="view-shipping" role="tabpanel">
+            <section class="detail-section capacity-section"><div class="panel-title-row"><h3>Current truck capacity</h3><span class="muted-caption" id="capacityCaption">Estimated cargo fill</span></div><div class="capacity-visual"><div class="capacity-background"></div><svg class="big-truck" viewBox="0 0 560 205" aria-label="Truck side view"><use href="#truck-art"/></svg><div class="trailer-overlay" id="trailerOverlay"><div class="trailer-fill" id="trailerFill"></div><div class="trailer-grid"></div><strong id="capacityPercent">0%</strong></div></div><div class="capacity-meta"><div><span>CARGO UNITS</span><strong id="cargoUnits">—</strong></div><div><span>VEHICLE</span><strong id="capacityVehicle">—</strong></div><div><span>EST. LOAD</span><strong id="capacityLoad">—</strong></div></div></section>
+            <section class="detail-section route-section"><div class="panel-title-row"><h3>Route overview</h3><div class="map-actions"><span id="routeDistance">— km · Demo</span><button type="button" class="map-reset" id="resetMapBtn"><svg><use href="#ic-rotate"/></svg> Reset map</button></div></div><div class="map-frame" id="mapFrame"><div class="map-canvas" id="mapCanvas"><svg viewBox="0 0 880 340" preserveAspectRatio="xMidYMid slice" class="map-art" aria-label="Illustrative route map"><rect width="880" height="340" fill="#1a1d22"/><g fill="#25292f" opacity=".9"><path d="M-40 22 244-30l-23 112L-20 135Z"/><path d="M255-20 497 0l-53 119-224-37Z"/><path d="M510-10 785 15l-24 121-305-18Z"/><path d="M-20 149 203 97l18 153-235 44Z"/><path d="m224 95 226 29-31 177-202-54Z"/><path d="m463 130 295 15-53 178-282-11Z"/><path d="m777 141 145-15v220l-204-20Z"/></g><g stroke="#343a42" stroke-width="2" fill="none" opacity=".85"><path d="M-10 60 890 260M-30 170 884 87M82-20 251 358M320-20 299 360M574-10 501 370M762-20 730 360M-20 300 905 45M-10 222 900 321"/><path d="M-30 110 902 205M137-15 114 360M403-30 828 380" stroke-width="1.1"/></g><g stroke="#565d67" stroke-width="5" fill="none" opacity=".95"><path d="M40 0 249 129l145 5 186 96L880 174"/><path d="M510-20 448 94l-37 90-129 58L241 363"/><path d="M0 260 239 177l200 18 144 126"/></g><g stroke="#262c32" stroke-width="2" fill="none"><path d="M40 0 249 129l145 5 186 96L880 174"/><path d="M510-20 448 94l-37 90-129 58L241 363"/></g><g fill="#747c89" font-size="11" font-family="Inter,Arial,sans-serif" letter-spacing="1"><text x="125" y="75">INDUSTRIAL PRECINCT</text><text x="555" y="70">EASTERN DISTRIBUTION</text><text x="45" y="282">FREIGHT TERMINAL</text><text x="628" y="285">LOGISTICS PARK</text></g><path d="M210 272 250 238 309 239 360 192 407 183 453 147 491 110 545 107 594 82" fill="none" stroke="#0d57e8" stroke-width="10" opacity=".18" stroke-linecap="round" stroke-linejoin="round"/><path id="mapRoute" d="M210 272 250 238 309 239 360 192 407 183 453 147 491 110 545 107 594 82" fill="none" stroke="#4e84ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 0"/><circle cx="210" cy="272" r="9" fill="#1b2536" stroke="#86adff" stroke-width="3"/><circle cx="594" cy="82" r="9" fill="#1b2536" stroke="#86adff" stroke-width="3"/><circle class="map-moving-dot" cx="407" cy="183" r="7" fill="#e4edff" stroke="#3879ff" stroke-width="4"/><circle cx="407" cy="183" r="16" fill="#3879ff" opacity=".13"/></svg></div><div class="map-chip"><span class="dot-blue"></span> Route illustration · Not live GPS</div><div class="map-zoom"><button id="zoomInBtn" type="button" aria-label="Zoom in">+</button><button id="zoomOutBtn" type="button" aria-label="Zoom out">−</button></div></div><div class="route-bottom"><div><span class="route-marker origin"></span><span id="routeFrom">—</span></div><svg><use href="#ic-arrow"/></svg><div><span class="route-marker destination"></span><span id="routeTo">—</span></div></div></section>
+            <section class="detail-section"><div class="panel-title-row"><h3>Cargo photo reports</h3><span class="muted-caption">Illustrative gallery · Not proof of delivery</span></div><div class="photo-grid" id="photoGrid"></div></section>
+            <section class="detail-section timeline-section"><div class="panel-title-row"><h3>Shipment activity</h3><span class="muted-caption">Manual simulation</span></div><div class="timeline" id="activityTimeline"></div><button type="button" class="advance-btn" id="advanceBtn"><svg><use href="#ic-arrow"/></svg><span>Advance demo status</span></button></section>
           </section>
-
-          <section class="panel overview-panel">
-            <div class="panel-heading">
-              <div>
-                <h2>Delivery Overview</h2>
-                <p>Selected delivery information</p>
-              </div>
-              <span class="live-label">● DEMO</span>
-            </div>
-
-            <div class="vehicle-preview">
-              <div class="vehicle-preview-label">VEHICLE INFORMATION</div>
-              <div class="truck-illustration">🚚</div>
-              <div class="vehicle-preview-footer">
-                <span id="overviewVehicle">No vehicle selected</span>
-                <strong id="overviewCapacity">—</strong>
-              </div>
-            </div>
-
-            <div class="detail-section">
-              <h3>Route Overview</h3>
-              <div class="route-preview">
-                <div class="route-path"></div>
-                <div class="route-point start"></div>
-                <div class="route-point end"></div>
-                <span class="route-placeholder">Demo route preview</span>
-              </div>
-            </div>
-
-            <div id="overviewDetails" class="overview-details">
-              <p>Select a delivery to see its details.</p>
-            </div>
-          </section>
-
+          <section class="detail-view" id="view-vehicle" role="tabpanel"><div class="content-card"><div class="panel-title-row"><h3>Assigned vehicle</h3><span class="demo-marker">DEMO DETAILS</span></div><div class="vehicle-hero"><svg viewBox="0 0 560 205" id="vehicleLargeArt"><use href="#truck-art"/></svg></div><div class="info-grid" id="vehicleInfoGrid"></div></div><div class="content-card"><h3>Load planning</h3><p class="fine-print">Capacities are illustrative pallet-unit values for testing the interface. Actual freight capacity depends on weight, size and vehicle specifications.</p><div class="wide-progress"><div id="vehicleProgress"></div></div></div></section>
+          <section class="detail-view" id="view-documents" role="tabpanel"><div class="content-card"><h3>Documents</h3><p class="muted-copy">Shipping paperwork and proof of delivery will appear here when a real system is connected.</p><div class="doc-item"><svg><use href="#ic-file"/></svg><div><strong>Shipment summary</strong><span>Preview information from this demo booking</span></div><button class="outline-button" id="downloadSummaryBtn" type="button">Download .txt</button></div><div class="doc-item muted"><svg><use href="#ic-file"/></svg><div><strong>Proof of delivery</strong><span>Unavailable in prototype mode</span></div><span class="coming-soon">NOT AVAILABLE</span></div></div></section>
+          <section class="detail-view" id="view-company" role="tabpanel"><div class="content-card"><h3>Workspace information</h3><p class="muted-copy">This is a demonstration workspace. No live transport operators or customer accounts are connected.</p><div class="info-grid" id="companyInfoGrid"></div></div></section>
+          <section class="detail-view" id="view-billing" role="tabpanel"><div class="content-card"><div class="panel-title-row"><h3>Estimated delivery charge</h3><span class="demo-marker">AUD · DEMO ONLY</span></div><div class="billing-total" id="billingTotal">$0.00</div><p class="fine-print">A sample estimate, not a binding quote. No card details are requested and no payments are processed.</p><div class="info-grid" id="billingInfoGrid"></div></div></section>
         </div>
-
-        <section class="panel quick-panel">
-          <div class="panel-heading">
-            <div>
-              <h2>Quick Actions</h2>
-              <p>Get things moving</p>
-            </div>
-          </div>
-          <div class="quick-grid">
-            <button class="quick-action" data-page="book">
-              <span>＋</span>
-              <strong>Book a Delivery</strong>
-              <small>Create a new request</small>
-            </button>
-            <button class="quick-action" data-page="tracking">
-              <span>◎</span>
-              <strong>Track Delivery</strong>
-              <small>View delivery progress</small>
-            </button>
-            <button class="quick-action" data-page="drivers">
-              <span>▣</span>
-              <strong>Driver Portal</strong>
-              <small>Manage demo jobs</small>
-            </button>
-          </div>
-        </section>
-      </section>
-
-      <!-- DELIVERIES -->
-      <section class="page" id="deliveries">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">DELIVERY MANAGEMENT</div>
-            <h1>My Deliveries</h1>
-            <p>Review your delivery requests and their progress.</p>
-          </div>
-          <button class="primary-button" data-page="book">+ New Delivery</button>
-        </div>
-
-        <div class="panel">
-          <div class="panel-heading">
-            <h2>All Deliveries</h2>
-            <span class="subtle-label" id="deliveryCount">0 requests</span>
-          </div>
-          <div id="allDeliveries" class="delivery-list"></div>
-        </div>
-      </section>
-
-      <!-- TRACKING -->
-      <section class="page" id="tracking">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">DELIVERY MONITORING</div>
-            <h1>Tracking</h1>
-            <p>Follow the progress of your selected delivery.</p>
-          </div>
-        </div>
-
-        <div class="tracking-layout">
-          <section class="panel">
-            <div class="panel-heading">
-              <h2>Delivery Route</h2>
-              <span class="live-label">SIMULATED</span>
-            </div>
-            <div class="tracking-map">
-              <div class="map-grid"></div>
-              <div class="map-line"></div>
-              <span class="map-pin pickup-pin">A</span>
-              <span class="map-pin dropoff-pin">B</span>
-              <span class="map-truck">🚚</span>
-              <div class="map-watermark">DEMO MAP · NOT LIVE GPS</div>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-heading">
-              <h2>Delivery Details</h2>
-            </div>
-            <div id="trackingDetails"></div>
-          </section>
-        </div>
-      </section>
-
-      <!-- NEW DELIVERY -->
-      <section class="page" id="book">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">NEW REQUEST</div>
-            <h1>Book a Delivery</h1>
-            <p>Enter your delivery details to receive a demo estimate.</p>
-          </div>
-        </div>
-
-        <form id="bookingForm" class="booking-layout">
-          <div class="panel form-panel">
-            <div class="panel-heading">
-              <div>
-                <h2>Delivery Information</h2>
-                <p>Where should we collect and deliver your goods?</p>
-              </div>
-            </div>
-
-            <div class="field-group">
-              <label for="pickup">Pickup Address</label>
-              <input id="pickup" name="pickup" type="text"
-                     placeholder="Enter full pickup address" required>
-            </div>
-
-            <div class="field-group">
-              <label for="dropoff">Drop-off Address</label>
-              <input id="dropoff" name="dropoff" type="text"
-                     placeholder="Enter full delivery address" required>
-            </div>
-
-            <div class="form-row">
-              <div class="field-group">
-                <label for="cargoType">Cargo Type</label>
-                <select id="cargoType" name="cargoType">
-                  <option value="Pallets">Pallets</option>
-                  <option value="Furniture">Furniture</option>
-                  <option value="Machinery">Machinery</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div class="field-group">
-                <label for="distance">Estimated Distance (km)</label>
-                <input id="distance" name="distance" type="number"
-                       min="1" max="2000" step="0.1"
-                       placeholder="e.g. 25" required>
-              </div>
-            </div>
-
-            <div class="field-group">
-              <label for="cargoNotes">Cargo Details</label>
-              <textarea id="cargoNotes" name="cargoNotes" rows="3"
-                        placeholder="Number of pallets, dimensions, weight or special requirements"></textarea>
-            </div>
-
-            <div class="field-group">
-              <label for="deliveryTime">Delivery Time</label>
-              <select id="deliveryTime" name="deliveryTime">
-                <option value="ASAP">As soon as possible</option>
-                <option value="Today">Today</option>
-                <option value="Tomorrow">Tomorrow</option>
-                <option value="Scheduled">Schedule later</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="booking-side">
-            <div class="panel">
-              <div class="panel-heading">
-                <h2>Vehicle Selection</h2>
-              </div>
-
-              <div class="vehicle-options">
-                <button type="button" class="vehicle-option selected" data-vehicle="ute">
-                  <span class="vehicle-symbol">🛻</span>
-                  <span>
-                    <strong>Ute / Small Truck</strong>
-                    <small>Small loads · Up to 1 pallet</small>
-                  </span>
-                  <span class="selection-circle"></span>
-                </button>
-
-                <button type="button" class="vehicle-option" data-vehicle="medium">
-                  <span class="vehicle-symbol">🚚</span>
-                  <span>
-                    <strong>Medium Truck</strong>
-                    <small>Medium loads · Up to 8 pallets</small>
-                  </span>
-                  <span class="selection-circle"></span>
-                </button>
-
-                <button type="button" class="vehicle-option" data-vehicle="large">
-                  <span class="vehicle-symbol">🚛</span>
-                  <span>
-                    <strong>Large Truck</strong>
-                    <small>Large freight and heavy loads</small>
-                  </span>
-                  <span class="selection-circle"></span>
-                </button>
-              </div>
-            </div>
-
-            <div class="panel estimate-panel">
-              <span class="eyebrow">ESTIMATED PRICE</span>
-              <div class="estimate-amount" id="estimatePrice">$0.00</div>
-              <p>Illustrative estimate only. Not a real quote.</p>
-              <button type="submit" class="primary-button full-width">
-                Create Demo Request →
-              </button>
-            </div>
-          </div>
-        </form>
-      </section>
-
-      <!-- DRIVERS -->
-      <section class="page" id="drivers">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">DRIVER PORTAL</div>
-            <h1>Drivers</h1>
-            <p>Manage delivery opportunities in the demo environment.</p>
-          </div>
-        </div>
-
-        <div class="stats-grid driver-stats">
-          <article class="stat-card">
-            <span>Available Jobs</span>
-            <strong id="availableJobsCount">0</strong>
-            <small>Demo delivery requests</small>
-          </article>
-          <article class="stat-card">
-            <span>Assigned Jobs</span>
-            <strong id="assignedJobsCount">0</strong>
-            <small>Accepted demo requests</small>
-          </article>
-        </div>
-
-        <div class="panel">
-          <div class="panel-heading">
-            <h2>Available Delivery Requests</h2>
-          </div>
-          <div id="driverJobs"></div>
-        </div>
-      </section>
-
-      <!-- MESSAGES -->
-      <section class="page" id="messages">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">COMMUNICATIONS</div>
-            <h1>Messages</h1>
-            <p>Your delivery conversations.</p>
-          </div>
-        </div>
-        <div class="panel empty-state">
-          <div class="empty-icon">▢</div>
-          <h2>No conversations yet</h2>
-          <p>Real driver messaging will be added in a future version.</p>
-        </div>
-      </section>
-
-      <!-- PAYMENTS -->
-      <section class="page" id="payments">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">BILLING</div>
-            <h1>Payments</h1>
-            <p>Review your estimated delivery costs.</p>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-heading">
-            <h2>Demo Payment History</h2>
-          </div>
-          <div id="paymentHistory"></div>
-          <p class="disclaimer">
-            No payments are collected or processed in this prototype.
-          </p>
-        </div>
-      </section>
-
-      <!-- SETTINGS -->
-      <section class="page" id="settings">
-        <div class="page-heading">
-          <div>
-            <div class="eyebrow">PREFERENCES</div>
-            <h1>Settings</h1>
-            <p>Manage your Droply prototype.</p>
-          </div>
-        </div>
-
-        <div class="panel settings-panel">
-          <h2>Account</h2>
-          <div class="setting-row">
-            <span>Account Type</span>
-            <strong>Guest / Demo</strong>
-          </div>
-          <div class="setting-row">
-            <span>App Version</span>
-            <strong>2.0 Prototype</strong>
-          </div>
-          <div class="setting-row">
-            <span>Data Storage</span>
-            <strong>This browser only</strong>
-          </div>
-          <div class="setting-row">
-            <span>Currency</span>
-            <strong>AUD</strong>
-          </div>
-
-          <div class="settings-actions">
-            <button id="resetDemoBtn" class="danger-button">
-              Clear Demo Bookings
-            </button>
-          </div>
-        </div>
-      </section>
-
+      </div>
     </main>
   </div>
-</div>
 
-<!-- MOBILE NAVIGATION -->
-<nav class="mobile-nav" aria-label="Mobile navigation">
-  <button class="mobile-nav-link active" data-page="dashboard">
-    <span>▦</span> Home
-  </button>
-  <button class="mobile-nav-link" data-page="deliveries">
-    <span>▤</span> Deliveries
-  </button>
-  <button class="mobile-nav-link mobile-create" data-page="book">
-    <span>＋</span> Book
-  </button>
-  <button class="mobile-nav-link" data-page="tracking">
-    <span>◎</span> Tracking
-  </button>
-  <button class="mobile-nav-link" data-page="settings">
-    <span>⚙</span> Profile
-  </button>
-</nav>
+  <nav class="mobile-nav" aria-label="Mobile navigation"><button data-go="dashboard" class="active"><svg><use href="#ic-grid"/></svg><span>Home</span></button><button data-go="tracking"><svg><use href="#ic-pin"/></svg><span>Tracking</span></button><button id="mobileNavCreate" class="mobile-plus" type="button" aria-label="New request"><svg><use href="#ic-plus"/></svg></button><button data-go="requests"><svg><use href="#ic-box"/></svg><span>Requests</span></button><button data-go="settings"><svg><use href="#ic-user"/></svg><span>Account</span></button></nav>
 
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
-
+  <dialog class="request-dialog" id="requestDialog" aria-labelledby="requestTitle"><form id="requestForm" class="request-form"><div class="dialog-heading"><div><span class="eyebrow">FREIGHT REQUEST / DEMO</span><h2 id="requestTitle">Create a shipment</h2><p>Build a local demo delivery. Nothing is sent to a driver.</p></div><button type="button" class="icon-btn dialog-close" data-close-dialog aria-label="Close"><svg><use href="#ic-close"/></svg></button></div><div class="form-content"><div class="form-main"><div class="form-section-label">ROUTE</div><div class="field"><label for="pickup">Pickup location <span>*</span></label><input id="pickup" name="pickup" placeholder="e.g. Dandenong South VIC" maxlength="100" required></div><div class="field"><label for="dropoff">Drop-off location <span>*</span></label><input id="dropoff" name="dropoff" placeholder="e.g. Port Melbourne VIC" maxlength="100" required></div><div class="form-row"><div class="field"><label for="distance">Estimated kilometres <span>*</span></label><input id="distance" name="distance" type="number" min="1" max="2000" step="0.1" value="24" required></div><div class="field"><label for="cargoType">Cargo type</label><select id="cargoType" name="cargoType"><option>Palletised freight</option><option>Furniture</option><option>Equipment</option><option>General freight</option></select></div></div><div class="form-section-label spaced">LOAD</div><div class="form-row"><div class="field"><label for="vehicle">Vehicle class <span>*</span></label><select id="vehicle" name="vehicle"><option value="ute">Ute / Light</option><option value="van">Transit van</option><option value="truck">Rigid truck</option></select></div><div class="field"><label for="pallets">Pallet units <span>*</span></label><input id="pallets" name="pallets" type="number" min="1" max="17" value="1" required></div></div><div class="field"><label for="notes">Handling notes <span class="optional">OPTIONAL</span></label><textarea id="notes" name="notes" rows="3" maxlength="500" placeholder="Dimensions, handling notes or special instructions"></textarea></div></div><aside class="form-sidebar"><div class="estimate-kicker">INSTANT DEMO ESTIMATE</div><div class="estimated-price" id="formEstimate">$0.00</div><span class="estimate-caption">AUD · sample calculation</span><div class="estimate-divider"></div><div class="estimate-line"><span>Vehicle</span><strong id="estimateVehicle">Ute / Light</strong></div><div class="estimate-line"><span>Distance</span><strong id="estimateDistance">24 km</strong></div><div class="estimate-line"><span>Capacity</span><strong id="estimateCapacity">1 of 1 units</strong></div><p class="estimate-footnote">This app is a GitHub Pages prototype. Quotes are indicative only, and requests stay in this browser.</p></aside></div><div class="dialog-footer"><span><span class="state-led"></span> DEMO REQUEST · NO PAYMENT</span><div><button type="button" class="outline-button" data-close-dialog>Cancel</button><button type="submit" class="blue-button"><svg><use href="#ic-plus"/></svg>Create demo request</button></div></div></form></dialog>
+  <dialog class="photo-dialog" id="photoDialog" aria-label="Sample cargo photo"><button type="button" class="icon-btn dialog-close" id="closePhotoBtn" aria-label="Close photo"><svg><use href="#ic-close"/></svg></button><img id="photoDialogImg" src="" alt="Sample warehouse reference photograph"><p id="photoDialogCaption">Illustrative photo, not an actual shipment report.</p></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
